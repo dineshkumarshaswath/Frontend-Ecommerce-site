@@ -65,7 +65,7 @@ export default function ProductDetail() {
                         <Carousel pause='hover'>
                             {product.images && product.images.map((image) => (
                                 <Carousel.Item key={image.id}>
-                                    <img className="d-block w-100" src={image.images} alt={product.name} height="500" width="500" />
+                                    <img className="d-block w-100" src={image.image} alt={product.name} height="500" width="500" />
 
                                 </Carousel.Item>
                             ))}

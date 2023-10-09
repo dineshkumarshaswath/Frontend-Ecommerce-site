@@ -90,8 +90,15 @@ export default function Payment() {
             console.log(order,'2')
     
             navigate('/order/success')
+            const config={
+              headers:{
+                  'x-auth-token':localStorage.getItem("token"),
+                  'Content-type':"application/json"
+  
+              }
+          }
             
-            const data =await axios.post('https://e-commerce-dk.onrender.com/api/v1/verifyorder', { response: response }
+            const {data} =await axios.post('https://e-commerce-dk.onrender.com/api/v1/verifyorder', { response: response },config
             
             )   
         }
@@ -107,7 +114,14 @@ export default function Payment() {
     amount = Math.round( orderInfo.totalPrice);
    try {
        const _pay = { amount: amount}
-       const {data}= await axios.post('https://e-commerce-dk.onrender.com/api/v1/ordercreate', _pay,
+       const config={
+        headers:{
+            'x-auth-token':localStorage.getItem("token"),
+            'Content-type':"application/json"
+
+        }
+    }
+       const {data}= await axios.post('https://e-commerce-dk.onrender.com/api/v1/ordercreate', _pay,config
               
        )
        console.log(data)
@@ -127,23 +141,26 @@ export default function Payment() {
     <div className="row wrapper"> 
     <div style={{borderRadius:'30px',padding:'3rem'}}>
         
-            <h1 className="mb-3" style={{textAlign:'center',fontSize:'1.5rem'}}>confirm payment</h1>
+            <h1 className="mb-3" style={{textAlign:'center',fontWeight:"bold",marginBottom:"10px"}}>confirm payment</h1>
             
-            <div className='razerpay'>
-                <img src='/images/products/1.jpg' alt='Razerpay company' />
+            <div className='razerpay' >
+                <img src='/images/products/razorpay.png' alt='Razerpay company' />
   
                 
-            </div>
+            </div   >
+            <div  style={{margin:'20px',display:'grid',placeItems:"center"}}>
             <Button
                 id="rzp-button1"
                 type="submit"
                 className="btn"
+               
              
                 onClick={()=>handlePayment(Number(orderInfo.totalPrice))}
                 >
-                Pay - { `$${orderInfo.totalPrice}` }
+                Pay - { `$${orderInfo && orderInfo.totalPrice}` }
             </Button>
-           <h2>Demo Card No: 4718 6091 0820 4366</h2>
+            </div>
+           <h3>Demo Card No: 4718 6091 0820 4366</h3>
        
     </div>
     

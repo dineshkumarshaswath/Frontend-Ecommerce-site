@@ -6,16 +6,18 @@ import axios from 'axios'
 
 
 
-export const createOrder= order=>async(dispatch) =>{
+export const createOrder= (order) =>async(dispatch) =>{
     try {
         dispatch(createOrderRequest())
         const config={
             headers:{
-                'x-auth-token':localStorage.getItem("token")
+                'x-auth-token':localStorage.getItem("token"),
+                'Content-type':"application/json"
+
             }
         }
         const {data}= await axios.post("https://e-commerce-dk.onrender.com/api/v1/order/new",order,config)
-        dispatch(createOrderSuccess())
+        dispatch(createOrderSuccess(data))
 
         
     } catch (error) {
@@ -27,7 +29,7 @@ export const createOrder= order=>async(dispatch) =>{
 
 
 
-export const userOrder = async(dispatch) =>{
+export const userOrder = (id)=>async(dispatch) =>{
     try {
         dispatch(userOrdersRequest())
         const config={
@@ -35,8 +37,10 @@ export const userOrder = async(dispatch) =>{
                 'x-auth-token':localStorage.getItem("token")
             }
         }
-        const {data}= await axios.post("https://e-commerce-dk.onrender.com/api/v1/myorders",config)
+        const {data}= await axios.get("https://e-commerce-dk.onrender.com/api/v1/myorders",config)
+      
         dispatch(userOrdersSuccess(data))
+        
 
         
     } catch (error) {

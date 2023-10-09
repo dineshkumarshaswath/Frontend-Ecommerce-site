@@ -48,7 +48,7 @@ export default function Cart(){
                 <div className="cart-item">
                     <div className="row">
                         <div className="col-4 col-lg-3">
-                            <img src={item.images} alt={item.name} height="90" width="115"/>
+                            <img src={item.image} alt={item.name} height="90" width="115"/>
                         </div>
 
                         <div className="col-5 col-lg-3">

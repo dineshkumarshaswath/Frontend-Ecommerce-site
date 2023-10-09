@@ -2,20 +2,22 @@ import { Fragment, useEffect } from "react";
 import Metadata from '../layout/Metadata'
 import {MDBDataTable} from 'mdbreact'
 import { useDispatch, useSelector } from "react-redux";
-import { userOrder as userOrderAction,  } from "../../actions/orderAction";
+import { userOrder as userOrderAction  } from "../../actions/orderAction";
 import { Link } from "react-router-dom";
 
 export default function UserOrder(){
 
-  const { userOrders=[] } =useSelector(state=>state.orderState)
+  const { userOrders} = useSelector(state=>state.orderState)
     const dispatch= useDispatch()
+  
 
     useEffect(()=>{
         dispatch(userOrderAction())
+      
         
-    })
+    },[dispatch])
 
-
+   
     const setOrders=()=>{
         const data={
             columns:[
@@ -84,6 +86,7 @@ export default function UserOrder(){
             
             
             />
+            <>your orders</>
 
         </Fragment>
     )
