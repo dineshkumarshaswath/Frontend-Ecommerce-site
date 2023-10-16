@@ -61,6 +61,12 @@ const productSlice=createSlice({
                 ...state,
                 error:null
             }
+         },
+         clearProduct(state,action){
+            return{
+                ...state,
+                product:{}
+            }
          }
 
     }
@@ -69,7 +75,8 @@ const productSlice=createSlice({
 
 const{actions,reducer}=productSlice
  export const {productRequest,productSuccess,productFail,
-createReviewFail,createReviewRequest,createReviewSuccess,clearError,clearReviewSubmitted}=actions
+createReviewFail,createReviewRequest,createReviewSuccess,clearError,
+clearReviewSubmitted,clearProduct}=actions
 
 export default reducer
 

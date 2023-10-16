@@ -7,6 +7,7 @@ import Loader from "../layout/Loader"
 
 export default function Orderdetail(){
     const {orderDetail,loading}=useSelector(state=>state.orderState)
+    //const{user}=useSelector(state=>state.authState)
     const {shippingInfo={},user={},orderStatus='Processing',
              orderItems=[],totalPrice=0, paymentInfo={}}=orderDetail
       
@@ -17,7 +18,7 @@ export default function Orderdetail(){
     useEffect(()=>{
         dispatch(orderDetailAction(id))
 
-    },[])
+    },[dispatch])
 
 
 
@@ -39,7 +40,7 @@ export default function Orderdetail(){
             <p className="mb-4"><b>Address:</b>{shippingInfo.address}, {shippingInfo.city},
             {shippingInfo.postalCode},
             {shippingInfo.state},{shippingInfo.country}</p>
-            <p><b>Amount:</b> {totalPrice}</p>
+            <p><b>Amount: $</b>{totalPrice}`</p>
 
             <hr />
 
@@ -59,7 +60,7 @@ export default function Orderdetail(){
                 {orderItems && orderItems.map(item =>(
                       <div className="row my-5">
                       <div className="col-4 col-lg-2">
-                          <img src={item.images} alt={item.name} height="45" width="65" />
+                          <img src={item.image} alt={item.name} height="45" width="65" />
                       </div>
 
                       <div className="col-5 col-lg-5">

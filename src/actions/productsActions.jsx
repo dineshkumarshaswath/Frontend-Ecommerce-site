@@ -1,6 +1,10 @@
 import axios from 'axios'
 import { productsFail, productsRequest, productsSuccess } from '../components/slices/productsSlice'
-import { createReviewFail, createReviewRequest, createReviewSuccess, productFail, productRequest, productSuccess } from '../components/slices/productSlice'
+import { createReviewFail, createReviewRequest,
+    createReviewSuccess,
+     productFail,
+      productRequest,
+       productSuccess } from '../components/slices/productSlice'
 
 export const getProducts =(keyword,price,category,rating,currentPage)=>async (dispatch) =>{
      try {
@@ -60,19 +64,19 @@ export const getProduct = id => async (dispatch) =>{
 }
 
 
-export const createReview = (reviewData)=> async (dispatch) =>{
+
+export const createReview = reviewData => async (dispatch) => {
    try {
       dispatch(createReviewRequest())
-
       const config={
          headers:{
-             'x-auth-token':localStorage.getItem("token"),
-             'Content-type':"application/json"
+            'x-auth-token':localStorage.getItem("token"),
+            'Content-type':'application/json'
          }
-     }
+      }
      
-    const {data}=await axios.put(`https://e-commerce-dk.onrender.com/api/v1/product/review`,reviewData,config)
-      dispatch(createReviewSuccess(data))
+    const { data }=await axios.put('https://e-commerce-dk.onrender.com/api/v1/product/review',reviewData,config)
+      dispatch(createReviewSuccess(data))                                                                                          
       
    } catch (error) {
       //handle error
@@ -85,6 +89,35 @@ export const createReview = (reviewData)=> async (dispatch) =>{
 
 
 }
+
+
+
+// export const createReview = reviewData => async (dispatch) =>{
+//    try {
+//       dispatch(createReviewRequest())
+
+//       const config={
+//          headers:{
+//              'x-auth-token':localStorage.getItem("token"),
+//              'Content-type':"application/json"
+//          }
+//      }
+     
+//     const {data}=await axios.put(`http://localhost:8888/api/v1/product/review`,reviewData,config)
+//         console.log(data,2)
+//     dispatch(createReviewSuccess())
+      
+//    } catch (error) {
+//       //handle error
+//       dispatch( createReviewFail(error.response.data.message))
+
+
+      
+//    }
+ 
+
+
+// }
 
 
 

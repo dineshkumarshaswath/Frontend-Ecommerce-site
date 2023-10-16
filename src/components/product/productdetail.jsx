@@ -1,21 +1,27 @@
 import { Fragment, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getProduct } from "../../actions/productsActions"
+import {  createReview, getProduct } from "../../actions/productsActions"
 import { useParams } from "react-router-dom"
 import Loader from "../layout/Loader"
 import { Carousel } from 'react-bootstrap'
 import Metadata from "../layout/Metadata"
 import { addCartItem } from "../../actions/cartAction"
-import { Modal ,Button} from "react-bootstrap"
+import { Modal} from "react-bootstrap"
+import { clearError, clearProduct, clearReviewSubmitted } from "../slices/productSlice"
+import {toast}  from 'react-toastify'
+import Productreview from "./Productreview"
+
+
 
 
 export default function ProductDetail() {
     const { id } = useParams()
-    const { product, loading, error } = useSelector((state) => state.productState)
+    const { product= {}, loading, error,isReviewSubmitted } = useSelector((state) => state.productState)
+   const {user}=useSelector((state)=>state.authState);
     const dispatch = useDispatch()
     const [quantity, setQuantity] = useState(1)
     const [show, setShow] = useState(false);
-    const [comment,setComment]=useState('')
+   
 
     const increaseQty = () => {
         const count = document.querySelector(".count")
@@ -42,19 +48,59 @@ export default function ProductDetail() {
   const handleShow = () => setShow(true);
 
   const [rating,setRating]=useState(1)
+  const [comment,setComment]=useState("")
 
 
-
-
+const reviewHandler = () => {
+  
+    const formData = new FormData();
+    formData.append("rating",rating);
+    formData.append("comment",comment);
+    formData.append("productId",id);
+    console.log(rating,comment,id)
+    dispatch(createReview(formData))
+   
+}
 
 
 
 
 
     useEffect(() => {
-        dispatch(getProduct(id))
 
-    }, [dispatch, id])
+        if(isReviewSubmitted){
+            handleClose()
+            toast('Review submitted successfully ',{
+                type:"success",
+                position:toast.POSITION.BOTTOM_CENTER,
+                onOpen:()=>dispatch(clearReviewSubmitted())
+            })
+           
+        }
+
+        if(error){
+            toast(error,{
+             position:toast.POSITION.BOTTOM_CENTER,
+             type:"error",
+             onOpen:()=>dispatch(clearError())
+         })
+            return 
+         }
+
+         if(!product._id || isReviewSubmitted ){
+            dispatch(getProduct(id))
+          }
+   
+          return  ()=>{
+            dispatch(clearProduct())
+
+
+          }
+
+        
+    
+
+    }, [dispatch, id,isReviewSubmitted,error])
 
     return (
         <Fragment>
@@ -111,10 +157,10 @@ export default function ProductDetail() {
                         <p> {product.description}</p>
                         <hr />
                         <p id="product_seller mb-3">Sold by: <strong>{product.seller}</strong></p>
-
+                {user?
                         <button id="review_btn" onClick={handleShow}  type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal">
                             Submit Your Review
-                        </button>
+                        </button>:<div className="alert alert-danger mt-5">log in to Post Review</div>}
 
                         <div className="row mt-2 mb-5">
                             <div className="rating w-50">
@@ -141,12 +187,12 @@ export default function ProductDetail() {
                                                   
                                                 </ul>
 
-                                                <textarea name="review" id="review"  onChange={e=>setComment(e.target.value)}
-                                                className="form-control mt-3">
+                                                <textarea name="review" id="review"  onChange={(e)=>setComment(e.target.value)}
+                                                className="form-control mt-3" >
 
                                                 </textarea>
                                             
-                                               <button aria-label="Close" disabled={loading} 
+                                               <button aria-label="Close" disabled={loading} onClick={reviewHandler}
                                                 className='btn my-3 float-right review-btn px-4 text-white'>Submit</button>
 
                                     </Modal.Body>
@@ -159,6 +205,10 @@ export default function ProductDetail() {
 
                     </div>
                 </div>
+
+                {product.reviews && product.reviews.length >0 ?
+                 <Productreview reviews={product.reviews} />:null}
+
             </Fragment>}
 
         </Fragment>

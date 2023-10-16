@@ -1,6 +1,6 @@
 import { createOrderFail, createOrderRequest, createOrderSuccess,
      orderDetailFail,
-     orderDetailSuccess,
+     orderDetailSuccess,orderDetailRequest,
      userOrdersFail, userOrdersRequest, userOrdersSuccess } from "../components/slices/orderSlice"
 import axios from 'axios'
 
@@ -60,8 +60,9 @@ export const orderDetail = (id)=>async(dispatch) =>{
                 'x-auth-token':localStorage.getItem("token")
             }
         }
-        const {data}= await axios.post(`https://e-commerce-dk.onrender.com/api/v1/order/${id}`,config)
+        const {data}= await axios.get(`https://e-commerce-dk.onrender.com/api/v1/order/${id}`,config)
         dispatch(orderDetailSuccess(data))
+       
 
         
     } catch (error) {
