@@ -144,7 +144,14 @@ const reviewHandler = () => {
                         </div>
                         <button type="button" id="cart_btn"
                             disabled={product.stock == 0 ? true : false}
-                            onClick={() => dispatch(addCartItem(product._id, quantity))}
+                            onClick={() => {dispatch(addCartItem(product._id, quantity ))
+                                toast('Item Added successfully',{
+                                    position:toast.POSITION.BOTTOM_CENTER,
+                                    type:"success",
+                                  
+                                })
+                            
+                            }}
                             className="btn btn-primary d-inline ml-4">Add to Cart</button>
 
                         <hr />

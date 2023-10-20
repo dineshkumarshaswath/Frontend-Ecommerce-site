@@ -1,7 +1,7 @@
 import { createOrderFail, createOrderRequest, createOrderSuccess,
      orderDetailFail,
      orderDetailSuccess,orderDetailRequest,
-     userOrdersFail, userOrdersRequest, userOrdersSuccess } from "../components/slices/orderSlice"
+     userOrdersFail, userOrdersRequest, userOrdersSuccess, adminOrdersRequest, adminOrdersSuccess, adminOrdersFail, deleteOrdersRequest, deleteOrdersSuccess, deleteOrdersFail, updateOrdersRequest, updateOrdersSuccess, updateOrdersFail } from "../components/slices/orderSlice"
 import axios from 'axios'
 
 
@@ -73,6 +73,69 @@ export const orderDetail = (id)=>async(dispatch) =>{
 }
 
 
+export const adminOrders =async(dispatch) =>{
+    try {
+        dispatch(adminOrdersRequest())
+        const config={
+            headers:{
+                'x-auth-token':localStorage.getItem("token")
+            }
+        }
+        const {data}=  await axios.get("https://e-commerce-dk.onrender.com/api/v1/admin/orders",config)
+      
+        dispatch(adminOrdersSuccess(data))
+        
+
+        
+    } catch (error) {
+        dispatch(adminOrdersFail(error.response.data.message))
+        
+    }
+    
+}
+
+
+export const deleteOrder = (id)=>async(dispatch) =>{
+    try {
+        dispatch(deleteOrdersRequest())
+        const config={
+            headers:{
+                'x-auth-token':localStorage.getItem("token")
+            }
+        }
+        await axios.delete(`https://e-commerce-dk.onrender.com/api/v1/admin/order/${id}`,config)
+        dispatch(deleteOrdersSuccess())
+       
+
+        
+    } catch (error) {
+        dispatch(deleteOrdersFail(error.response.data.message))
+        
+    }
+    
+}
+
+
+
+export const updateOrder = (id,orderData)=>async(dispatch) =>{
+    try {
+        dispatch(updateOrdersRequest())
+        const config={
+            headers:{
+                'x-auth-token':localStorage.getItem("token")
+            }
+        }
+        const {data}= await axios.put(`https://e-commerce-dk.onrender.com/api/v1/admin/order/${id}`,orderData,config)
+        dispatch(updateOrdersSuccess(data))
+       
+
+        
+    } catch (error) {
+        dispatch(updateOrdersFail(error.response.data.message))
+        
+    }
+    
+}
 
 
 

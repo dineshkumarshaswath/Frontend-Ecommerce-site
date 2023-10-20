@@ -30,6 +30,12 @@ import Payment from './components/cart/Payment'
 import Ordersuccess from './components/cart/orderSuccess'
 import UserOrder from './components/orders/userorders'
 import Orderdetail from './components/orders/orderdetail'
+import Dashboard from './components/admin/dashboard'
+import Productlist from './components/admin/productlist'
+import Newproduct from './components/admin/newproduct'
+import Updateproducts from './components/admin/updateproduct'
+import Orderlist from './components/admin/orderlist'
+import Updateorder from './components/admin/updateOrder'
 
 
 
@@ -86,6 +92,17 @@ function App() {
       </Routes>
       
       </div>
+      {/*admin routes  */}
+      <Routes>
+        <Route path='/admin/dashboard' element={ <ProtectRoute isAdmin={true}><Dashboard/></ProtectRoute>}/>
+        <Route path='/admin/products' element={ <ProtectRoute isAdmin={true}><Productlist/></ProtectRoute>}/>
+        <Route path='/admin/products/create' element={ <ProtectRoute isAdmin={true}><Newproduct/></ProtectRoute>}/>
+        <Route path='/admin/product/:id' element={ <ProtectRoute isAdmin={true}><Updateproducts/></ProtectRoute>}/>
+        <Route path='/admin/orders' element={ <ProtectRoute isAdmin={true}><Orderlist/></ProtectRoute>}/>
+        <Route path='/admin/order/:id' element={ <ProtectRoute isAdmin={true}><Updateorder/></ProtectRoute>}/>
+      
+      </Routes>
+      
       
       <Footer/>
       </HelmetProvider>
