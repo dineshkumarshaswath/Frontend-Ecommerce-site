@@ -36,26 +36,17 @@ import Newproduct from './components/admin/newproduct'
 import Updateproducts from './components/admin/updateproduct'
 import Orderlist from './components/admin/orderlist'
 import Updateorder from './components/admin/updateOrder'
+import Userlist from './components/admin/userlist'
+import Updateuser from './components/admin/updateuser'
+import Reviewlist from './components/admin/reviewlist'
 
 
 
 function App() {
- // const [stripeApiKey, setStripeApiKey]=useState("")
+ 
   useEffect(()=>{
 
     store.dispatch(loadUser)
-    // async function getStripeApiKey(){
-    //   const config={
-    //     headers:{
-    //       'x-auth-token':localStorage.getItem("token")
-    //     }
-    //   }
-    //   const { data } = await axios.get("http://localhost:8888/api/v1/stripeapi",config)
-    //   console.log(data.stripeApiKey)
-    //   setStripeApiKey(data.stripeApiKey)
-      
-    // }
-    // getStripeApiKey()
    
 
   },[])
@@ -100,6 +91,9 @@ function App() {
         <Route path='/admin/product/:id' element={ <ProtectRoute isAdmin={true}><Updateproducts/></ProtectRoute>}/>
         <Route path='/admin/orders' element={ <ProtectRoute isAdmin={true}><Orderlist/></ProtectRoute>}/>
         <Route path='/admin/order/:id' element={ <ProtectRoute isAdmin={true}><Updateorder/></ProtectRoute>}/>
+        <Route path='/admin/users' element={ <ProtectRoute isAdmin={true}><Userlist/></ProtectRoute>}/>
+        <Route path='/admin/user/:id' element={ <ProtectRoute isAdmin={true}><Updateuser/></ProtectRoute>}/>
+      <Route path='/admin/reviews' element={ <ProtectRoute isAdmin={true}><Reviewlist/></ProtectRoute>}/>
       
       </Routes>
       

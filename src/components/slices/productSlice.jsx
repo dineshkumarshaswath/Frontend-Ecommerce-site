@@ -9,7 +9,9 @@ const productSlice=createSlice({
         isReviewSubmitted:false,
         isProductCreated:false,
         isProductDeleted:false ,
-        isProductUpdated:false
+        isProductUpdated:false,
+        isReviewDeleted:false,
+        reviews:[]
     },
     reducers:{
         productRequest(state,action){
@@ -155,6 +157,56 @@ const productSlice=createSlice({
                 isProductUpdated:false
             }
          },
+         reviewsRequest(state,action){
+            return {
+             ...state,
+             loading:true
+         } 
+         },
+        reviewsSuccess(state,action){
+             return{
+                 ...state,
+                 loading:false,
+                 reviews:action.payload.reviews,
+                
+             }
+         },
+         reviewsFail(state,action){
+             return{
+                 ...state,
+                 loading:false,
+                 error:action.payload,
+                
+             }
+         },
+          deleteReviewRequest(state,action){
+            return {
+             ...state,
+             loading:true
+         } 
+         },
+         deleteReviewSuccess(state,action){
+             return{
+                 ...state,
+                 loading:false, 
+                 isReviewDeleted:true         
+                
+             }
+         },
+         deleteReviewFail(state,action){
+             return{
+                 ...state,
+                 loading:false,
+                 error:action.payload,
+                 
+             }
+         },
+           cleaerReviewDeleted(state,action){
+            return{
+                ...state,
+                isReviewDeleted:false
+            }
+         },
 
 
 
@@ -168,7 +220,9 @@ createReviewFail,createReviewRequest,createReviewSuccess,clearError,
 clearReviewSubmitted,clearProduct,newProductSuccess,
 newProductFail,newProductRequest,cleaerProductCreated,deleteProductFail,
 deleteProductRequest,deleteProductSuccess,cleaerProductDeleted,
-updateProductFail,updateProductRequest,updateProductSuccess,clearProductUpdated}=actions
+updateProductFail,updateProductRequest,updateProductSuccess,clearProductUpdated,
+reviewsFail,reviewsRequest,reviewsSuccess,deleteReviewFail,deleteReviewRequest,
+deleteReviewSuccess,cleaerReviewDeleted}=actions
 
 export default reducer
 

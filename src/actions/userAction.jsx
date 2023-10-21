@@ -25,6 +25,8 @@ import {
     resetPasswordFail
 } from '.././components/slices/authSlice'
 import axios from 'axios'
+import { deleteUserFail, deleteUserRequest, deleteUserSuccess, updateUserFail, updateUserRequest, updateUserSuccess, userFail, userRequest, userSuccess, usersFail, usersRequest, usersSuccess } from '../components/slices/userSlice'
+import { deleteOrdersFail } from '../components/slices/orderSlice'
 
 
 export const login = (email, password) => async (dispatch) => {
@@ -225,3 +227,108 @@ export const resetPasswordhandler = (formData,token) => async (dispatch) => {
 
     }
 }
+
+
+
+export const getUsers =  async (dispatch) => {
+
+    try {
+        dispatch(usersRequest())
+        const config={
+            headers:{
+                'x-auth-token':localStorage.getItem("token")
+            }
+        }
+       
+        const { data } = await axios.get("https://e-commerce-dk.onrender.com/api/v1/admin/users",config)
+       // localStorage.setItem('token',data.token)
+
+        dispatch(usersSuccess(data))
+
+
+    } catch (error) {
+        //error handling
+        dispatch(usersFail(error.response.data.message))
+
+
+    }
+}
+
+
+export const getUser = id=> async (dispatch) => {
+
+    try {
+        dispatch(userRequest())
+        const config={
+            headers:{
+                'x-auth-token':localStorage.getItem("token")
+            }
+        }
+       
+        const { data } = await axios.get(`https://e-commerce-dk.onrender.com/api/v1/admin/user/${id}`,config)
+       // localStorage.setItem('token',data.token)
+
+        dispatch(userSuccess(data))
+
+
+    } catch (error) {
+        //error handling
+        dispatch(userFail(error.response.data.message))
+
+
+    }
+}
+
+
+export const deleteUser = id=> async (dispatch) => {
+
+    try {
+        dispatch(deleteUserRequest())
+        const config={
+            headers:{
+                'x-auth-token':localStorage.getItem("token")
+            }
+        }
+       
+         await axios.delete(`https://e-commerce-dk.onrender.com/api/v1/admin/user/${id}`,config)
+       // localStorage.setItem('token',data.token)
+
+        dispatch(deleteUserSuccess())
+
+
+    } catch (error) {
+        //error handling
+        dispatch(deleteUserFail(error.response.data.message))
+
+
+    }
+}
+
+
+export const updateUser = (id,formData)=> async (dispatch) => {
+
+    try {
+        dispatch(updateUserRequest())
+        const config={
+            headers:{
+                'x-auth-token':localStorage.getItem("token"),
+                'Content-type':'application/json'
+            }
+        }
+       
+         await axios.put(`https://e-commerce-dk.onrender.com/api/v1/admin/user/${id}`,formData,config)
+       // localStorage.setItem('token',data.token)
+
+        dispatch(updateUserSuccess())
+
+
+    } catch (error) {
+        //error handling
+        dispatch(updateUserFail(error.response.data.message))
+
+
+    }
+}
+
+
+

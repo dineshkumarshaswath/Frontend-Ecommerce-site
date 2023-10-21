@@ -5,6 +5,7 @@ import productReducer from "./components/slices/productSlice"
 import authReducer from './components/slices/authSlice'
 import cartReducer from './components/slices/cartSlice'
 import orderReducer from './components/slices/orderSlice'
+import userReducer from './components/slices/userSlice'
 
 
 const reducer = combineReducers({
@@ -12,7 +13,8 @@ const reducer = combineReducers({
     productState: productReducer,
     authState: authReducer,
     cartState:cartReducer,
-    orderState:orderReducer
+    orderState:orderReducer,
+    userState:userReducer
    
 
 

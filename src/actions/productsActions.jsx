@@ -5,12 +5,18 @@ import { createReviewFail, createReviewRequest,
      deleteProductFail,
      deleteProductRequest,
      deleteProductSuccess,
+     deleteReviewFail,
+     deleteReviewRequest,
+     deleteReviewSuccess,
      newProductFail,
      newProductRequest,
      newProductSuccess,
      productFail,
       productRequest,
        productSuccess, 
+       reviewsFail, 
+       reviewsRequest, 
+       reviewsSuccess, 
        updateProductFail, 
        updateProductRequest,
        updateProductSuccess} from '../components/slices/productSlice'
@@ -178,6 +184,67 @@ export const updateProduct = (id,productData) => async(dispatch)=>{
       dispatch(updateProductFail(error.response.data.message))
       
    }
+}
+
+
+export const getReviews = id=> async (dispatch) =>{
+   try {
+      dispatch(reviewsRequest())
+     // console.log(id,3)
+       const config={ 
+            'x-auth-token':localStorage.getItem("token"),
+     
+         }
+      
+     
+   
+      
+   const {data}=await axios.get(`https://e-commerce-dk.onrender.com/api/v1/admin/allreviews`,{
+      params: {
+         id
+      },
+      headers: config
+  })
+     console.log(data,34)
+   
+   dispatch(reviewsSuccess(data))
+      
+   } catch (error) {
+      //handle error
+      dispatch( reviewsFail(error.response.data.message))
+
+
+      
+   }
+ 
+
+
+}
+
+
+export const deleteReview = (productId,id)=> async (dispatch) =>{
+   try {
+      dispatch(deleteReviewRequest())
+       const config={
+        
+            'x-auth-token':localStorage.getItem("token")
+             
+         
+      }
+     
+    await axios.delete(`https://e-commerce-dk.onrender.com/api/v1/admin/review`,{params:{productId,id},headers:config})
+      dispatch(deleteReviewSuccess())
+      
+   } catch (error) {
+      //handle error
+      dispatch( deleteReviewFail(error.response.data.message))
+
+
+      
+   }
+ 
+
+
 }
 
 
