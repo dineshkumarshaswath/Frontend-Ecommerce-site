@@ -81,7 +81,15 @@ export default function Login() {
                         <Link to='/register' className="float-right mt-3">New User?</Link>
                     </form>
                 </div>
-            </div>
+                
+               </div>
+               <div style={{textAlign:'center',marginTop:"20px"}}>
+                <h4>Demo Email: dkshopdemo@gmail.com</h4>
+                 <h4>Demo Password : dkshop123</h4>
+
+
+
+               </div>
 
         </Fragment>
     )

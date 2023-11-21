@@ -6,6 +6,7 @@ import Loader from './layout/Loader'
 import Product from './product/product'
 import { toast } from 'react-toastify'
 import Paginaton from 'react-js-pagination'
+import { Carousel } from 'react-bootstrap'
 
 
 
@@ -45,6 +46,30 @@ export default function Home() {
             {loading?<Loader/>:<Fragment>
              <Metadata title={'Latest roducts'}/>
             <h1 id="products_heading">Latest Products</h1>
+           
+                        <Carousel pause='hover'>
+                            
+                                <Carousel.Item >
+                                    <img className="d-block w-100" src={'/images/products/carousel2.jpg'} alt={'carousel2'} />
+                                   
+
+                                </Carousel.Item>
+                                <Carousel.Item>
+                                <img className="d-block w-100" src={'/images/products/carousel5.jpg'} alt={'carousel5'} />
+                                </Carousel.Item>
+                                <Carousel.Item>
+                                <img className="d-block w-100" src={'/images/products/carousel1.jpg'} alt={'carousel1'} />
+                                </Carousel.Item>
+                                <Carousel.Item>
+                                <img className="d-block w-100" src={'/images/products/carousel4.jpg'} alt={'carousel4'} />
+                                </Carousel.Item>
+
+                        
+
+
+                        </Carousel>
+
+                   
             <section id='products' className='container mt-5'>
         <div className="row">
             { products && products.map((product,idx)=>(
